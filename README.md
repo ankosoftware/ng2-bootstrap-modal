@@ -1,6 +1,7 @@
 #Angular2 Bootstrap Modal Service
 
-Library to simplify the work with bootstrap modal dialogs
+Library to simplify the work with bootstrap modal dialogs.
+Tool to easy dialogs management.  
 
 ##Quickstart
 
@@ -10,6 +11,7 @@ app.module.ts:
 ```typescript
 import { NgModule} from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { BrowserModule } from '@angular/platform-browser';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AppComponent } from './app.component';
 @NgModule({
@@ -18,8 +20,10 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     CommonModule,
+    BrowserModule,
     BootstrapModalModule
-  ]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
 ```
@@ -33,8 +37,7 @@ confirm.component.ts:
 import { Component } from '@angular/core';
 import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
 
-@Component({
-  selector: 'confirm',
+@Component({  selector: 'confirm',
   template: `<div class="modal-content">
                    <div class="modal-header">
                      <button type="button" class="close" (click)="close()" >&times;</button>
@@ -54,6 +57,8 @@ export class ConfirmComponent extends DialogComponent {
     super(dialogService);
   }
   confirm() {
+    // on click on confirm button we set dialog result as true, 
+    // ten we can get dialog result from caller code 
     this.result = true;
     this.close();
   }
@@ -65,23 +70,28 @@ Add component to **declarations** and **entryComponents** section because compon
 will be created dynamically.
 
 app.module.ts:
-```typescript
+```typescrit
     import { NgModule} from '@angular/core';
     import { CommonModule } from "@angular/common";
+    import { BrowserModule } from '@angular/platform-browser';
     import { BootstrapModalModule } from 'ng2-bootstrap-modal';
-    import { ConfirmComponent } from './confirm.component.ts';
+    import { ConfirmComponent } from './confirm.component';
+    import { AppComponent } from './app.component';
     @NgModule({
       declarations: [
+        AppComponent,
         ConfirmComponent
       ],
       imports: [
         CommonModule,
+        BrowserModule,
         BootstrapModalModule
       ],
-      //Don't forget add component to **entryComponents** section
+      //Don't forget add component to entryComponents section
       entryComponents: [
         ConfirmComponent
-      ]
+      ],
+      bootstrap: [AppComponent]
     })
     export class AppModule {}
 ```
@@ -91,7 +101,7 @@ app.module.ts:
 app.component.ts
 ```typescript
     import { Component } from '@angular/core';
-    import { ConfirmComponent } from './confirm.component.ts';
+    import { ConfirmComponent } from './confirm.component';
     import { DialogService } from "ng2-bootstrap-modal";
     
     @Component({
@@ -107,7 +117,9 @@ app.component.ts
         showConfirm() {
             let disposable = this.dialogService.addDialog(ConfirmComponent, {
                 title:'Confirm title', 
-                message:'Confirm message'}).subscribe((isConfirmed)=>{
+                message:'Confirm message'})
+                .subscribe((isConfirmed)=>{
+                    //We get dialog result
                     if(isConfirmed) {
                         alert('accepted');
                     }
@@ -115,7 +127,7 @@ app.component.ts
                         alert('declined');
                     }
                 });
-            
+            //We can close dialog calling disposable.unsubscribe();
             //If dialog was not closed manually close it by timeout
             setTimeout(()=>{
                 disposable.unsubscribe();
@@ -159,10 +171,10 @@ Service to show dialogs
 class DialogService {
     /**
     * Adds dialog
-    * @param {Type<DialogComponent>} component
-    * @param {any?} data
-    * @param {number?} index
-    * @return {Observable<any>}
+    * @param {Type<DialogComponent>} component - Modal dialog component
+    * @param {any?} data - Initialization data for component (optional) will be added to component instance and can be used in component code or template 
+    * @param {number?} index - Dialog index (optional) you can set order of modals
+    * @return {Observable<any>} - returns Observable to get dialog result
     */
     public addDialog:(component:Type<DialogComponent>, data?:any, index?:number) => {}
 }
