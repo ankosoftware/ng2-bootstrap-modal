@@ -124,4 +124,39 @@ app.component.ts
     }
 ```
 
+##Documentation
 
+###DialogComponent
+Super class of all modal components.
+
+####Class Overview
+```typescript
+abstract class DialogComponent {
+    /**
+    * Constructor
+    * @param {DialogService} dialogService - instance of DialogService
+    */
+    constructor(dialogService: DialogService)
+    
+    /**
+    * Dialog result 
+    * @type {any}
+    */
+    protected result:any
+    
+    /**
+    * Closes dialog
+    */
+    public close:Function
+}
+```
+
+###DialogService 
+Service to show dialogs
+
+###Class Overview
+```typescript
+class DialogService {
+    public addDialog:(component:Type<DialogComponent>, data?:any, index?:number) => {}
+}
+```

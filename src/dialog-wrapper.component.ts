@@ -1,5 +1,5 @@
 import {
-  Component, ViewContainerRef, ViewChild, ComponentFactoryResolver, ReflectiveInjector
+  Component, ViewContainerRef, ViewChild, ComponentFactoryResolver, ReflectiveInjector, Type
 } from '@angular/core';
 import {DialogComponent} from "./dialog.component";
 
@@ -14,13 +14,37 @@ import {DialogComponent} from "./dialog.component";
   `
 })
 export class DialogWrapperComponent {
+
+  /**
+   * Target element to insert dialog content component
+   * @type {ViewContainerRef}
+   */
   @ViewChild('element', {read: ViewContainerRef}) private element: ViewContainerRef;
+
+  /**
+   *
+   * @type {boolean}
+   */
   private shown:boolean = false;
+
+  /**
+   * Dialog content componet
+   * @type {DialogComponent}
+   */
   private content: DialogComponent;
 
+  /**
+   * Constructor
+   * @param {ComponentFactoryResolver} resolver
+   */
   constructor(private resolver: ComponentFactoryResolver) {}
 
-  addComponent(component) {
+  /**
+   * Adds content dialog component to wrapper
+   * @param {Type<DialogComponent>} component
+   * @return {DialogComponent}
+   */
+  addComponent(component: Type<DialogComponent>) {
     let factory = this.resolver.resolveComponentFactory(component);
     let injector = ReflectiveInjector.fromResolvedProviders([], this.element.injector);
     let componentRef = factory.create(injector);
@@ -30,10 +54,17 @@ export class DialogWrapperComponent {
     return this.content;
   }
 
-  show() {
+  /**
+   * Shows dialog
+   */
+  show():void {
     this.shown = true;
   }
-  hide() {
+
+  /**
+   * Hides dialog
+   */
+  hide():void {
     this.shown = false;
   }
 }

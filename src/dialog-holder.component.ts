@@ -4,6 +4,7 @@ import {
 } from "@angular/core";
 import {DialogComponent} from "./dialog.component";
 import {DialogWrapperComponent} from "./dialog-wrapper.component";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'dialog-holder',
@@ -11,15 +12,32 @@ import {DialogWrapperComponent} from "./dialog-wrapper.component";
 })
 export class DialogHolderComponent {
 
+  /**
+   * Target element to insert dialogs
+   * @type {ViewContainerRef}
+   */
   @ViewChild('element', {read: ViewContainerRef}) private element: ViewContainerRef;
 
-  dialogs: Array<any> = [];
+  /**
+   * Array of dialogs
+   * @type {Array<DialogComponent> }
+   */
+  dialogs: Array<DialogComponent> = [];
 
-  constructor(private resolver: ComponentFactoryResolver) {
+  /**
+   * Constructor
+   * @param {ComponentFactoryResolver} resolver
+   */
+  constructor(private resolver: ComponentFactoryResolver) {}
 
-  }
-
-  addDialog(component:Type<DialogComponent>, data?:any, index?:number) {
+  /**
+   * Adds dialog
+   * @param {Type<DialogComponent>} component
+   * @param {any?} data
+   * @param {number?}index
+   * @return {Observable<any>}
+   */
+  addDialog(component:Type<DialogComponent>, data?:any, index?:number):Observable<any> {
     let factory = this.resolver.resolveComponentFactory(DialogWrapperComponent);
     let componentRef = this.element.createComponent(factory, index);
     let dialogWrapper: DialogWrapperComponent = <DialogWrapperComponent> componentRef.instance;
@@ -36,6 +54,10 @@ export class DialogHolderComponent {
     return _component.fillData(data);
   }
 
+  /**
+   * Removes dialog
+   * @param {DialogComponent} component
+   */
   removeDialog(component:DialogComponent) {
     component.wrapper.hide();
     setTimeout(()=>{
