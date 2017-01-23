@@ -24,7 +24,7 @@ export class DialogService  {
   }
 
   /**
-   * Adds dialog to dialog holder
+   * Adds dialog
    * @param {Type<DialogComponent>} component
    * @param {any?} data
    * @param {number?} index

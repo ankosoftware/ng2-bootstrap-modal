@@ -157,6 +157,13 @@ Service to show dialogs
 ###Class Overview
 ```typescript
 class DialogService {
+    /**
+    * Adds dialog
+    * @param {Type<DialogComponent>} component
+    * @param {any?} data
+    * @param {number?} index
+    * @return {Observable<any>}
+    */
     public addDialog:(component:Type<DialogComponent>, data?:any, index?:number) => {}
 }
 ```
