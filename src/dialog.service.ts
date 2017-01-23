@@ -19,9 +19,7 @@ export class DialogService  {
    * @param {ApplicationRef} applicationRef
    * @param {Injector} injector
    */
-  constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector) {
-    this.dialogHolderComponent = this.createDialogHolder();
-  }
+  constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector) {}
 
   /**
    * Adds dialog
@@ -31,6 +29,9 @@ export class DialogService  {
    * @return {Observable<any>}
    */
   addDialog(component:Type<DialogComponent>, data?:any, index?:number): Observable<any> {
+    if(!this.dialogHolderComponent) {
+      this.dialogHolderComponent = this.createDialogHolder();
+    }
     return this.dialogHolderComponent.addDialog(component, data, index);
   }
 
@@ -39,6 +40,9 @@ export class DialogService  {
    * @param {DialogComponent} component
    */
   removeDialog(component:DialogComponent): void {
+    if(!this.dialogHolderComponent) {
+      return;
+    }
     this.dialogHolderComponent.removeDialog(component);
   }
 
