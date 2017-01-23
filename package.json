@@ -1,0 +1,31 @@
+{
+  "name": "ng2-bootstrap-modal",
+  "version": "0.0.1",
+  "description": "Library to simplify the work with bootstrap modal dialogs",
+  "main": "index.ts",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankosoftware/ng2-bootstrap-modal.git"
+  },
+  "keywords": [
+    "angular2",
+    "bootstrap",
+    "dialog",
+    "modal"
+  ],
+  "author": "Alexandr Vovchuk <a.vovchuk@gmail.com> (bikalay)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ankosoftware/ng2-bootstrap-modal/issues"
+  },
+  "homepage": "https://github.com/ankosoftware/ng2-bootstrap-modal#readme",
+  "dependencies": {
+    "@angular/common": "2.4.4",
+    "@angular/core": "2.4.4",
+    "rxjs": "5.0.3",
+    "zone.js": "0.7.6"
+  }
+}

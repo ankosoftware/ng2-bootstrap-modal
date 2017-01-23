@@ -1,0 +1,7 @@
+# Node Files #
+/node_modules/
+npm-debug.log
+
+# IDE #
+.idea/
+
