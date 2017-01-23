@@ -4,7 +4,5 @@ npm-debug.log
 
 # IDE #
 .idea/
-
-# Demo app #
-demo/node_modules/
-
+# Demo application #
+demo/
