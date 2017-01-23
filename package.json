@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/ankosoftware/ng2-bootstrap-modal#readme",
   "dependencies": {
-    "@angular/common": "2.4.4",
-    "@angular/core": "2.4.4",
-    "rxjs": "5.0.3",
-    "zone.js": "0.7.6"
+    "@angular/common": "^2.4.4",
+    "@angular/core": "^2.4.4",
+    "rxjs": "^5.0.3",
+    "zone.js": "^0.7.6"
   }
 }
