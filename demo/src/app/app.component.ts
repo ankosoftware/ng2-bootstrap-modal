@@ -1,42 +1,39 @@
 import { Component } from '@angular/core';
+import { AlertComponent } from './alert.component';
 import { ConfirmComponent } from './confirm.component';
+import { PromptComponent } from './prompt.component';
 import { DialogService } from "ng2-bootstrap-modal";
 import Timer = NodeJS.Timer;
 
 @Component({
   selector: 'app',
-  template: `
-        <div class="container" >
-          <h1>ng2-bootstrap-modal demo application</h1>
-          <button class="btn btn-default" (click)=showConfirm()>Show confirm</button> 
-          <span>Result: <b>{{ confirmResult }}</b></span>
-        </div>
-      `
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   confirmResult:boolean = null;
-  timeoutId:Timer;
+  promptMessage:string = '';
   constructor(private dialogService:DialogService) {}
+  showAlert() {
+    this.dialogService.addDialog(AlertComponent, {
+      title:'Alert!!!!',
+      message:'TADAM!!!'});
+  }
   showConfirm() {
     let disposable = this.dialogService.addDialog(ConfirmComponent, {
-      title:'Confirm title',
-      message:'Confirm message'})
+      title:'Confirmation',
+      message:'Bla bla comfirm action?'})
       .subscribe((isConfirmed)=>{
         //We get dialog result
         this.confirmResult = !!isConfirmed;
       });
-
-
-
-    //We can close dialog calling disposable.unsubscribe();
-
-    if(this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
-    //If dialog was not closed manually close it by timeout
-    this.timeoutId = setTimeout(()=>{
-      disposable.unsubscribe();
-      this.confirmResult = null;
-    },10000);
+  }
+  showPrompt() {
+    let disposable = this.dialogService.addDialog(PromptComponent, {
+      title:'Name dialog',
+      question:'Enter your name: '})
+      .subscribe((message)=>{
+        //We get dialog result
+        this.promptMessage = message;
+      });
   }
 }
