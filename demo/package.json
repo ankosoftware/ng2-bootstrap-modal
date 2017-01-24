@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^2.4.3",
     "@angular/router": "^3.3.1",
     "core-js": "^2.4.1",
-    "ng2-bootstrap-modal": "git+https://github.com/ankosoftware/ng2-bootstrap-modal.git",
+    "ng2-bootstrap-modal": "^0.0.1",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
