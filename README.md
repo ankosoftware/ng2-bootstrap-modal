@@ -7,6 +7,7 @@ It makes managing dialogs painless and more clear.
 ```npm
 npm install ng2-bootstrap-modal
 ```
+See [Live Demo](https://plnkr.co/edit/nYqPPQe58E2RW8C2yz49) 
 
 ##Quickstart
 
