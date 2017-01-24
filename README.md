@@ -3,6 +3,11 @@
 It is a library to make usage of bootstrap modal plugin easier in Angular2. 
 It makes managing dialogs painless and more clear.
 
+##Installation
+```npm
+npm install ng2-bootstrap-modal
+```
+
 ##Quickstart
 
 ### Step 1. import '**BootstrapModalModule**' module
