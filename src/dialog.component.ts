@@ -61,6 +61,8 @@ export abstract class DialogComponent implements OnDestroy {
    * OnDestroy handler
    */
   ngOnDestroy(): void {
-    this.observer.next(this.result);
+    if(this.observer) {
+      this.observer.next(this.result);
+    }
   }
 }
