@@ -1,7 +1,7 @@
 #Angular2 Bootstrap Modal Service
 
-Library to simplify the work with bootstrap modal dialogs.
-Tool to easy dialogs management.  
+It is a library to make usage of bootstrap modal plugin easier in Angular2. 
+It makes managing dialogs painless and more clear.
 
 ##Quickstart
 
@@ -29,8 +29,8 @@ export class AppModule {}
 ```
 
 ###Step 2. Create your modal dialog component
-Your modal dialog should be extended from **DialogComponent**.
-**DialogComponent** waits **DialogService** as constructor argument.
+Your modal dialog is expected to be extended from **DialogComponent**.
+Therefore **DialogService** is supposed to be a constructor argument of **DialogComponent**.
 
 confirm.component.ts:
 ```typescript
@@ -57,8 +57,8 @@ export class ConfirmComponent extends DialogComponent {
     super(dialogService);
   }
   confirm() {
-    // on click on confirm button we set dialog result as true, 
-    // ten we can get dialog result from caller code 
+    // we set dialog result as true on click on confirm button, 
+    // then we can get dialog result from caller code 
     this.result = true;
     this.close();
   }
@@ -87,7 +87,7 @@ app.module.ts:
         BrowserModule,
         BootstrapModalModule
       ],
-      //Don't forget add component to entryComponents section
+      //Don't forget to add the component to entryComponents section
       entryComponents: [
         ConfirmComponent
       ],
@@ -172,8 +172,8 @@ class DialogService {
     /**
     * Adds dialog
     * @param {Type<DialogComponent>} component - Modal dialog component
-    * @param {any?} data - Initialization data for component (optional) will be added to component instance and can be used in component code or template 
-    * @param {number?} index - Dialog index (optional) you can set order of modals
+    * @param {any?} data - Initialization data for component (optional) to add to component instance and can be used in component code or template 
+    * @param {number?} index - Dialog index (optional) to set order of modals
     * @return {Observable<any>} - returns Observable to get dialog result
     */
     public addDialog:(component:Type<DialogComponent>, data?:any, index?:number) => {}
