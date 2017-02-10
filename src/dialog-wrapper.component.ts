@@ -6,7 +6,7 @@ import {DialogComponent} from "./dialog.component";
 @Component({
   selector: 'dialog-wrapper',
   template: `
-  <div class="modal fade" [ngClass]="{'in':shown}" style="display:block !important;" role="dialog">
+  <div #container class="modal fade" style="display:block !important;" role="dialog">
     <div class="modal-dialog">
       <template #element></template>
     </div>
@@ -22,10 +22,9 @@ export class DialogWrapperComponent {
   @ViewChild('element', {read: ViewContainerRef}) private element: ViewContainerRef;
 
   /**
-   *
-   * @type {boolean}
+   * Link container DOM element
    */
-  private shown:boolean = false;
+  @ViewChild('container') public container;
 
   /**
    * Dialog content componet
@@ -52,20 +51,6 @@ export class DialogWrapperComponent {
     this.content =  <DialogComponent>componentRef.instance;
     this.content.wrapper = this;
     return this.content;
-  }
-
-  /**
-   * Shows dialog
-   */
-  show():void {
-    this.shown = true;
-  }
-
-  /**
-   * Hides dialog
-   */
-  hide():void {
-    this.shown = false;
   }
 }
 

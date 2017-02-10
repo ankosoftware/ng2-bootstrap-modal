@@ -49,7 +49,7 @@ export class DialogHolderComponent {
       this.dialogs.push(_component);
     }
     setTimeout(()=>{
-      dialogWrapper.show();
+      dialogWrapper.container.nativeElement.classList.add('in')
     });
     return _component.fillData(data);
   }
@@ -59,13 +59,19 @@ export class DialogHolderComponent {
    * @param {DialogComponent} component
    */
   removeDialog(component:DialogComponent) {
-    component.wrapper.hide();
-    setTimeout(()=>{
-      let index = this.dialogs.indexOf(component);
-      if(index>-1) {
-        this.element.remove(index);
-        this.dialogs.splice(index, 1);
-      }
-    }, 500);
+    let element = component.wrapper.container.nativeElement;
+
+    element.classList.remove('in');
+    setTimeout(() => {
+        this._removeElement(component);
+    }, 300);
+  }
+
+  private _removeElement(component) {
+    let index = this.dialogs.indexOf(component);
+    if(index>-1) {
+      this.element.remove(index);
+      this.dialogs.splice(index, 1);
+    }
   }
 }

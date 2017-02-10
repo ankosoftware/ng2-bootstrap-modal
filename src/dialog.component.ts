@@ -1,13 +1,9 @@
-import {
-  Component, OnDestroy
+import { OnDestroy
 } from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {DialogWrapperComponent} from "./dialog-wrapper.component";
 import {DialogService} from "./dialog.service";
 
-@Component({
-  selector: 'pagination'
-})
 export abstract class DialogComponent implements OnDestroy {
 
   /**
