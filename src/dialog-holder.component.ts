@@ -49,7 +49,7 @@ export class DialogHolderComponent {
       this.dialogs.push(_component);
     }
     setTimeout(()=>{
-      dialogWrapper.container.nativeElement.classList.add('in')
+      dialogWrapper.container.nativeElement.classList.add('show')
     });
     return _component.fillData(data);
   }
@@ -61,7 +61,7 @@ export class DialogHolderComponent {
   removeDialog(component:DialogComponent) {
     let element = component.wrapper.container.nativeElement;
 
-    element.classList.remove('in');
+    element.classList.remove('show');
     setTimeout(() => {
         this._removeElement(component);
     }, 300);
