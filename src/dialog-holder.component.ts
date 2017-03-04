@@ -1,10 +1,11 @@
 import {
-  Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, ReflectiveInjector,
+  Component, ViewChild, ViewContainerRef, ComponentFactoryResolver,
   Type
 } from "@angular/core";
 import {DialogComponent} from "./dialog.component";
 import {DialogWrapperComponent} from "./dialog-wrapper.component";
 import {Observable} from "rxjs";
+import {DialogOptions} from "./dialog-options";
 
 @Component({
   selector: 'dialog-holder',
@@ -34,23 +35,32 @@ export class DialogHolderComponent {
    * Adds dialog
    * @param {Type<DialogComponent>} component
    * @param {any?} data
-   * @param {number?}index
+   * @param {DialogOptions?}options
    * @return {Observable<any>}
    */
-  addDialog(component:Type<DialogComponent>, data?:any, index?:number):Observable<any> {
+  addDialog(component:Type<DialogComponent>, data?:any, options?:DialogOptions):Observable<any> {
+    options = options || {};
     let factory = this.resolver.resolveComponentFactory(DialogWrapperComponent);
-    let componentRef = this.element.createComponent(factory, index);
+    let componentRef = this.element.createComponent(factory, options.index);
     let dialogWrapper: DialogWrapperComponent = <DialogWrapperComponent> componentRef.instance;
     let _component: DialogComponent =  dialogWrapper.addComponent(component);
-    if(typeof(index) !== 'undefined') {
-      this.dialogs.splice(index, 0, _component);
+    if(typeof(options.index) !== 'undefined') {
+      this.dialogs.splice(options.index, 0, _component);
     }
     else {
       this.dialogs.push(_component);
     }
     setTimeout(()=>{
-      dialogWrapper.container.nativeElement.classList.add('in')
+      dialogWrapper.container.nativeElement.classList.add('show')
     });
+    if(options.autoCloseTimeout) {
+      setTimeout(()=>{
+        this.removeDialog(_component);
+      }, options.autoCloseTimeout);
+    }
+    if(options.closeByClickingOutside) {
+      dialogWrapper.closeByClickOutside();
+    }
     return _component.fillData(data);
   }
 
@@ -61,7 +71,7 @@ export class DialogHolderComponent {
   removeDialog(component:DialogComponent) {
     let element = component.wrapper.container.nativeElement;
 
-    element.classList.remove('in');
+    element.classList.remove('show');
     setTimeout(() => {
         this._removeElement(component);
     }, 300);
@@ -73,5 +83,10 @@ export class DialogHolderComponent {
       this.element.remove(index);
       this.dialogs.splice(index, 1);
     }
+  }
+
+  clear() {
+    this.element.clear();
+    this.dialogs = [];
   }
 }

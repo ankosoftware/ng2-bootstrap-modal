@@ -5,6 +5,9 @@ npm-debug.log
 # IDE #
 .idea/
 
+# Compiled code #
+dist
+
 # Demo app #
 demo/node_modules/
 

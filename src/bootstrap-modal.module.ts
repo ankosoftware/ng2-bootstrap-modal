@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { DialogHolderComponent } from "./dialog-holder.component";
 import { DialogWrapperComponent } from "./dialog-wrapper.component";
 import { DialogService } from "./dialog.service";
-
 @NgModule({
     declarations: [
         DialogHolderComponent,

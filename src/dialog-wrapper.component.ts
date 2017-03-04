@@ -2,14 +2,13 @@ import {
   Component, ViewContainerRef, ViewChild, ComponentFactoryResolver, ReflectiveInjector, Type
 } from '@angular/core';
 import {DialogComponent} from "./dialog.component";
+import {DialogService} from "./dialog.service";
 
 @Component({
   selector: 'dialog-wrapper',
   template: `
   <div #container class="modal fade" style="display:block !important;" role="dialog">
-    <div class="modal-dialog">
       <template #element></template>
-    </div>
   </div>
   `
 })
@@ -35,8 +34,9 @@ export class DialogWrapperComponent {
   /**
    * Constructor
    * @param {ComponentFactoryResolver} resolver
+   * @param {DialogService} dialogService
    */
-  constructor(private resolver: ComponentFactoryResolver) {}
+  constructor(private resolver: ComponentFactoryResolver, private dialogService: DialogService) {}
 
   /**
    * Adds content dialog component to wrapper
@@ -51,6 +51,14 @@ export class DialogWrapperComponent {
     this.content =  <DialogComponent>componentRef.instance;
     this.content.wrapper = this;
     return this.content;
+  }
+
+  closeByClickOutside() {
+    this.container.nativeElement.addEventListener('click', (event)=>{
+      if(event.target == this.container.nativeElement) {
+        this.dialogService.removeDialog(this.content);
+      }
+    }, false);
   }
 }
 

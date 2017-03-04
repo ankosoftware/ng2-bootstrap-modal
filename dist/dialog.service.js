@@ -16,11 +16,18 @@ var DialogService = (function () {
         this.applicationRef = applicationRef;
         this.injector = injector;
     }
-    DialogService.prototype.addDialog = function (component, data, index) {
+    DialogService.prototype.setCointainer = function (container) {
+        if (this.dialogHolderComponent) {
+            throw new Error('Dialog container already installed, try set container before create first dialog');
+        }
+        this.container = container;
+    };
+    ;
+    DialogService.prototype.addDialog = function (component, data, options) {
         if (!this.dialogHolderComponent) {
             this.dialogHolderComponent = this.createDialogHolder();
         }
-        return this.dialogHolderComponent.addDialog(component, data, index);
+        return this.dialogHolderComponent.addDialog(component, data, options);
     };
     DialogService.prototype.removeDialog = function (component) {
         if (!this.dialogHolderComponent) {
@@ -28,18 +35,23 @@ var DialogService = (function () {
         }
         this.dialogHolderComponent.removeDialog(component);
     };
+    DialogService.prototype.removeAll = function () {
+        this.dialogHolderComponent.clear();
+    };
     DialogService.prototype.createDialogHolder = function () {
         var _this = this;
         var componentFactory = this.resolver.resolveComponentFactory(dialog_holder_component_1.DialogHolderComponent);
         var componentRef = componentFactory.create(this.injector);
         var componentRootNode = componentRef.hostView.rootNodes[0];
-        var componentRootViewConainer = this.applicationRef['_rootComponents'][0];
-        var rootLocation = componentRootViewConainer.hostView.rootNodes[0];
+        if (!this.container) {
+            var componentRootViewContainer = this.applicationRef['_rootComponents'][0];
+            this.container = componentRootViewContainer.hostView.rootNodes[0];
+        }
         this.applicationRef.attachView(componentRef.hostView);
         componentRef.onDestroy(function () {
             _this.applicationRef.detachView(componentRef.hostView);
         });
-        rootLocation.appendChild(componentRootNode);
+        this.container.appendChild(componentRootNode);
         return componentRef.instance;
     };
     return DialogService;

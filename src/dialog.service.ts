@@ -4,6 +4,7 @@ import {
 import {DialogHolderComponent} from "./dialog-holder.component";
 import {DialogComponent} from "./dialog.component";
 import {Observable} from "rxjs";
+import {DialogOptions} from "./dialog-options";
 
 @Injectable()
 export class DialogService  {
@@ -13,6 +14,7 @@ export class DialogService  {
    * @type {DialogHolderComponent}
    */
   private dialogHolderComponent : DialogHolderComponent;
+  private container: Element;
 
   /**
    * @param {ComponentFactoryResolver} resolver
@@ -21,18 +23,24 @@ export class DialogService  {
    */
   constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector) {}
 
+  setCointainer(container: Element) {
+    if(this.dialogHolderComponent) {
+      throw new Error('Dialog container already installed, try set container before create first dialog');
+    }
+    this.container = container;
+  };
   /**
    * Adds dialog
    * @param {Type<DialogComponent>} component
    * @param {any?} data
-   * @param {number?} index
+   * @param {DialogOptions?} options
    * @return {Observable<any>}
    */
-  addDialog(component:Type<DialogComponent>, data?:any, index?:number): Observable<any> {
+  addDialog(component:Type<DialogComponent>, data?:any, options?:DialogOptions): Observable<any> {
     if(!this.dialogHolderComponent) {
       this.dialogHolderComponent = this.createDialogHolder();
     }
-    return this.dialogHolderComponent.addDialog(component, data, index);
+    return this.dialogHolderComponent.addDialog(component, data, options);
   }
 
   /**
@@ -47,23 +55,32 @@ export class DialogService  {
   }
 
   /**
+   * Closes all dialogs
+   */
+  removeAll(): void {
+    this.dialogHolderComponent.clear();
+  }
+
+  /**
    * Creates and add to DOM dialog holder component
    * @return {DialogHolderComponent}
    */
   private createDialogHolder(): DialogHolderComponent {
+
     let componentFactory = this.resolver.resolveComponentFactory(DialogHolderComponent);
+
     let componentRef = componentFactory.create(this.injector);
     let componentRootNode = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    let componentRootViewConainer = this.applicationRef['_rootComponents'][0];
-    let rootLocation: Element =   (componentRootViewConainer.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-
+    if(!this.container) {
+      let componentRootViewContainer = this.applicationRef['_rootComponents'][0];
+      this.container = (componentRootViewContainer.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    }
     this.applicationRef.attachView(componentRef.hostView);
 
     componentRef.onDestroy(() => {
       this.applicationRef.detachView(componentRef.hostView);
     });
-
-    rootLocation.appendChild(componentRootNode);
+    this.container.appendChild(componentRootNode);
 
     return componentRef.instance;
   }

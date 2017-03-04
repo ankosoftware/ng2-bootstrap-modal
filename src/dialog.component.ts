@@ -10,6 +10,7 @@ export abstract class DialogComponent implements OnDestroy {
    * Observer to return result from dialog
    */
   private observer: Observer<any>;
+
   /**
    * Dialog result
    * @type {any}
@@ -55,6 +56,7 @@ export abstract class DialogComponent implements OnDestroy {
 
   /**
    * OnDestroy handler
+   * Sends dialog result to observer
    */
   ngOnDestroy(): void {
     if(this.observer) {

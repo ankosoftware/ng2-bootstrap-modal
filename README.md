@@ -1,15 +1,81 @@
 #Angular2 Bootstrap Modal Service
 
 It is a library to make usage of bootstrap modal plugin easier in Angular2. 
-It makes managing dialogs painless and more clear.
+Create clear and reusable modal components.
+It makes managing dialogs painless and more clear. 
+
+Library does not use bootstrap js, only css.
+
+
+
 
 ##Installation
 ```npm
 npm install ng2-bootstrap-modal
 ```
-See [Live Demo](https://plnkr.co/edit/nYqPPQe58E2RW8C2yz49) 
+See [Live Demo](https://plnkr.co/nYqPPQe58E2RW8C2yz49) 
+
+###Without bootstrap?
+Yes, you can create your own css. Just write css for .modal and .modal-dialog classes.
+
+```css
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    -o-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+}
+
+.fade.in {
+    opacity: 1;
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+
+.modal.in .modal-dialog {
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+}
+
+.modal.fade .modal-dialog {
+    -webkit-transition: -webkit-transform .3s ease-out;
+    -o-transition: -o-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    -webkit-transform: translate(0,-25%);
+    -ms-transform: translate(0,-25%);
+    -o-transform: translate(0,-25%);
+    transform: translate(0,-25%);
+}
+
+@media (min-width: 768px) {
+    .modal-dialog {
+        width: 600px;
+        margin: 30px auto;
+    }
+}
+```
 
 ##Quickstart
+
+### Step 1. add bootstrap css 
 
 ### Step 1. import '**BootstrapModalModule**' module
 
