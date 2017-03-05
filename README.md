@@ -6,6 +6,7 @@ It makes managing dialogs painless and more clear.
 
 Library does not use bootstrap js, only css.
 
+Compatible with bootstrap 3 and bootstrap 4.
 
 
 
@@ -75,7 +76,18 @@ Yes, you can create your own css. Just write css for .modal and .modal-dialog cl
 
 ##Quickstart
 
-### Step 1. add bootstrap css 
+### Step 1. add bootstrap css  
+You can add bootstrap css from cdn
+```html
+<!-- Bootstrap 3.x -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+```
+or 
+```html
+<!-- Bootstrap 4.x -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+```
+
 
 ### Step 1. import '**BootstrapModalModule**' module
 
@@ -99,18 +111,36 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}
 ```
+By default dialogs placeholder will be added to AppComponent.
+But you can select custom placeholder (for example document body):
+```typescript
+imports: [
+    ...
+    BootstrapModalModule.forRoot({container:document.body})
+  ]
+```
+
 
 ###Step 2. Create your modal dialog component
 Your modal dialog is expected to be extended from **DialogComponent**.
+**DialogService** is generic class with two arguments:
+1) input dialog data type (data to initialize component);
+2) dialog result type;
+
 Therefore **DialogService** is supposed to be a constructor argument of **DialogComponent**.
 
 confirm.component.ts:
 ```typescript
 import { Component } from '@angular/core';
 import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
-
-@Component({  selector: 'confirm',
-  template: `<div class="modal-content">
+export interface ConfirmModel {
+  title:string;
+  message:string;
+}
+@Component({  
+    selector: 'confirm',
+    template: `<div class="modal-dialog">
+                <div class="modal-content">
                    <div class="modal-header">
                      <button type="button" class="close" (click)="close()" >&times;</button>
                      <h4 class="modal-title">{{title || 'Confirm'}}</h4>
@@ -122,9 +152,12 @@ import { DialogComponent, DialogService } from "ng2-bootstrap-modal";
                      <button type="button" class="btn btn-primary" (click)="confirm()">OK</button>
                      <button type="button" class="btn btn-default" (click)="close()" >Cancel</button>
                    </div>
-                 </div>`
+                 </div>
+              </div>`
 })
-export class ConfirmComponent extends DialogComponent {
+export class ConfirmComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel {
+  title: string;
+  message: string;
   constructor(dialogService: DialogService) {
     super(dialogService);
   }
@@ -212,10 +245,14 @@ app.component.ts
 
 ###DialogComponent
 Super class of all modal components.
-
 ####Class Overview
 ```typescript
-abstract class DialogComponent {
+/**
+* Dialog abstract class
+* @template T1 - input dialog data
+* @template T2 - dialog result
+*/
+abstract class DialogComponent<T1, T2> implements T1 {
     /**
     * Constructor
     * @param {DialogService} dialogService - instance of DialogService
@@ -224,14 +261,44 @@ abstract class DialogComponent {
     
     /**
     * Dialog result 
-    * @type {any}
+    * @type {T2}
     */
-    protected result:any
+    protected result:T2
     
     /**
     * Closes dialog
     */
     public close:Function
+}
+```
+
+###DialogOptions 
+```typescript
+interface DialogOptions {
+  /**
+  * Dialog index (optional) to set order of modals
+  * @type {number}
+  */
+  index?: number;
+ 
+  /**
+  * Timestamp to close dialog automatically after timeout (in msec)
+  * @type {number}
+  */
+  autoCloseTimeout?: number;
+  
+  /**
+  * Flag to close dialog by click on backdrop (outside dialog)
+  * @type {boolean}
+  */
+  closeByClickingOutside?: boolean;
+  
+  /**
+   * Custom backdrop color
+   * Default backdrop color you can set via css (.modal {backgroundColor:...})
+   * @type {string}
+   */
+  backdropColor?: string;
 }
 ```
 
@@ -243,11 +310,11 @@ Service to show dialogs
 class DialogService {
     /**
     * Adds dialog
-    * @param {Type<DialogComponent>} component - Modal dialog component
-    * @param {any?} data - Initialization data for component (optional) to add to component instance and can be used in component code or template 
-    * @param {number?} index - Dialog index (optional) to set order of modals
-    * @return {Observable<any>} - returns Observable to get dialog result
+    * @param {Type<DialogComponent<T1, T2>} component - Modal dialog component
+    * @param {T1?} data - Initialization data for component (optional) to add to component instance and can be used in component code or template 
+    * @param {DialogOptions?} Dialog options
+    * @return {Observable<T2>} - returns Observable to get dialog result
     */
-    public addDialog:(component:Type<DialogComponent>, data?:any, index?:number) => {}
+    public addDialog<T1, T2>(component:Type<DialogComponent<T1, T2>>, data?:T1, options: DialogOptions): Observable<T2> => {}
 }
 ```
