@@ -14,7 +14,7 @@ Compatible with bootstrap 3 and bootstrap 4.
 ```npm
 npm install ng2-bootstrap-modal
 ```
-See [Live Demo](https://plnkr.co/nYqPPQe58E2RW8C2yz49) 
+See [Live Demo](https://plnkr.co/edit/MB6NnzfhicMyAiMJy6YM?p=preview) 
 
 ###Without bootstrap?
 Yes, you can create your own css. Just write css for .modal and .modal-dialog classes.
