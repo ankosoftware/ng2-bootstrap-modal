@@ -8,21 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var dialog_holder_component_1 = require("./dialog-holder.component");
+var DialogServiceConfig = (function () {
+    function DialogServiceConfig() {
+        this.container = null;
+    }
+    return DialogServiceConfig;
+}());
+exports.DialogServiceConfig = DialogServiceConfig;
 var DialogService = (function () {
-    function DialogService(resolver, applicationRef, injector) {
+    function DialogService(resolver, applicationRef, injector, config) {
         this.resolver = resolver;
         this.applicationRef = applicationRef;
         this.injector = injector;
+        this.container = config && config.container;
     }
-    DialogService.prototype.setCointainer = function (container) {
-        if (this.dialogHolderComponent) {
-            throw new Error('Dialog container already installed, try set container before create first dialog');
-        }
-        this.container = container;
-    };
-    ;
     DialogService.prototype.addDialog = function (component, data, options) {
         if (!this.dialogHolderComponent) {
             this.dialogHolderComponent = this.createDialogHolder();
@@ -58,7 +63,8 @@ var DialogService = (function () {
 }());
 DialogService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [core_1.ComponentFactoryResolver, core_1.ApplicationRef, core_1.Injector])
+    __param(3, core_1.Optional()),
+    __metadata("design:paramtypes", [core_1.ComponentFactoryResolver, core_1.ApplicationRef, core_1.Injector, DialogServiceConfig])
 ], DialogService);
 exports.DialogService = DialogService;
 //# sourceMappingURL=dialog.service.js.map

@@ -20,7 +20,7 @@
 "src/**/*"
 ],
 "exclude": [
-"examples",
+"demo",
 "index.d.ts",
 "node_modules",
 "dist"

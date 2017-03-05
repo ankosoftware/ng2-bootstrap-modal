@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var dialog_wrapper_component_1 = require("./dialog-wrapper.component");
 var DialogHolderComponent = (function () {
@@ -30,6 +31,7 @@ var DialogHolderComponent = (function () {
         }
         setTimeout(function () {
             dialogWrapper.container.nativeElement.classList.add('show');
+            dialogWrapper.container.nativeElement.classList.add('in');
         });
         if (options.autoCloseTimeout) {
             setTimeout(function () {
@@ -39,12 +41,16 @@ var DialogHolderComponent = (function () {
         if (options.closeByClickingOutside) {
             dialogWrapper.closeByClickOutside();
         }
+        if (options.backdropColor) {
+            dialogWrapper.container.nativeElement.style.backgroundColor = options.backdropColor;
+        }
         return _component.fillData(data);
     };
     DialogHolderComponent.prototype.removeDialog = function (component) {
         var _this = this;
         var element = component.wrapper.container.nativeElement;
         element.classList.remove('show');
+        element.classList.remove('in');
         setTimeout(function () {
             _this._removeElement(component);
         }, 300);

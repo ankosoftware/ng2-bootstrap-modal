@@ -1,0 +1,81 @@
+<div class="container" >
+  <h1 class="text-center">ng2-bootstrap-modal demo</h1>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Alert example: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showAlert()>Show alert</button>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Confirm example: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showConfirm()>Show confirm</button>
+    </div>
+    <div class="col-sm-4" *ngIf="confirmResult != null">
+      <span>Result: </span>
+      <b [ngClass]="{'text-danger': !confirmResult, 'text-success': confirmResult}">{{confirmResult ? 'Accepted': 'Declined'}}</b>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Prompt example: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showPrompt()>Show prompt</button>
+    </div>
+    <div class="col-sm-4" *ngIf="promptMessage">
+      <span>Your name: </span>
+      <b>{{promptMessage}}</b>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Close dialog by click outside example: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showAlert2()>Show alert</button>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Close dialog by timeout example: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showAlert3()>Show alert</button>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Custom backdrop color example: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showAlert4()>Show alert</button>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-right">
+      <b>Show dialog from dialog: </b>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-default btn-block" (click)=showParentDialog()>Show dialog</button>
+    </div>
+  </div>
+</div>

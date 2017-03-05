@@ -1,5 +1,5 @@
 # Node Files #
-/node_modules/
+node_modules
 npm-debug.log
 
 # IDE #
@@ -8,6 +8,4 @@ npm-debug.log
 # Compiled code #
 dist
 
-# Demo app #
-demo/node_modules/
 

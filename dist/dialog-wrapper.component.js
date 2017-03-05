@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var dialog_service_1 = require("./dialog.service");
 var DialogWrapperComponent = (function () {
@@ -26,10 +27,12 @@ var DialogWrapperComponent = (function () {
     };
     DialogWrapperComponent.prototype.closeByClickOutside = function () {
         var _this = this;
-        this.container.nativeElement.addEventListener('click', function (event) {
-            if (event.target == _this.container.nativeElement) {
-                _this.dialogService.removeDialog(_this.content);
-            }
+        var containerEl = this.container.nativeElement;
+        containerEl.querySelector('.modal-content').addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+        containerEl.addEventListener('click', function () {
+            _this.dialogService.removeDialog(_this.content);
         }, false);
     };
     return DialogWrapperComponent;
@@ -45,7 +48,7 @@ __decorate([
 DialogWrapperComponent = __decorate([
     core_1.Component({
         selector: 'dialog-wrapper',
-        template: "\n  <div #container class=\"modal fade\" style=\"display:block !important;\" role=\"dialog\">\n      <template #element></template>\n  </div>\n  "
+        template: "\n    <div #container class=\"modal fade\" style=\"display:block !important;\" role=\"dialog\">\n        <template #element></template>\n    </div>\n"
     }),
     __metadata("design:paramtypes", [core_1.ComponentFactoryResolver, dialog_service_1.DialogService])
 ], DialogWrapperComponent);

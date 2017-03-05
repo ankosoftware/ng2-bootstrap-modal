@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
 var DialogComponent = (function () {
     function DialogComponent(dialogService) {
@@ -6,7 +7,7 @@ var DialogComponent = (function () {
     }
     DialogComponent.prototype.fillData = function (data) {
         var _this = this;
-        if (data === void 0) { data = {}; }
+        data = data || {};
         var keys = Object.keys(data);
         for (var i = 0, length_1 = keys.length; i < length_1; i++) {
             var key = keys[i];

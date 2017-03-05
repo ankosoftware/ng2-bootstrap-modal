@@ -5,7 +5,7 @@ import {
 import {DialogComponent} from "./dialog.component";
 import {DialogWrapperComponent} from "./dialog-wrapper.component";
 import {Observable} from "rxjs";
-import {DialogOptions} from "./dialog-options";
+import {DialogOptions} from "./dialog.service";
 
 @Component({
   selector: 'dialog-holder',
@@ -15,15 +15,14 @@ export class DialogHolderComponent {
 
   /**
    * Target element to insert dialogs
-   * @type {ViewContainerRef}
    */
-  @ViewChild('element', {read: ViewContainerRef}) private element: ViewContainerRef;
+  @ViewChild('element', {read: ViewContainerRef}) public element: ViewContainerRef;
 
   /**
    * Array of dialogs
    * @type {Array<DialogComponent> }
    */
-  dialogs: Array<DialogComponent> = [];
+  dialogs: Array<DialogComponent<any, any>> = [];
 
   /**
    * Constructor
@@ -34,16 +33,16 @@ export class DialogHolderComponent {
   /**
    * Adds dialog
    * @param {Type<DialogComponent>} component
-   * @param {any?} data
-   * @param {DialogOptions?}options
-   * @return {Observable<any>}
+   * @param {object?} data
+   * @param {DialogOptions?} options
+   * @return {Observable<*>}
    */
-  addDialog(component:Type<DialogComponent>, data?:any, options?:DialogOptions):Observable<any> {
-    options = options || {};
+  addDialog<T, T1>(component:Type<DialogComponent<T, T1>>, data?:T, options?:DialogOptions):Observable<T1> {
+    options = options || <DialogOptions>{};
     let factory = this.resolver.resolveComponentFactory(DialogWrapperComponent);
     let componentRef = this.element.createComponent(factory, options.index);
     let dialogWrapper: DialogWrapperComponent = <DialogWrapperComponent> componentRef.instance;
-    let _component: DialogComponent =  dialogWrapper.addComponent(component);
+    let _component: DialogComponent<T,T1> =  dialogWrapper.addComponent(component);
     if(typeof(options.index) !== 'undefined') {
       this.dialogs.splice(options.index, 0, _component);
     }
@@ -51,7 +50,8 @@ export class DialogHolderComponent {
       this.dialogs.push(_component);
     }
     setTimeout(()=>{
-      dialogWrapper.container.nativeElement.classList.add('show')
+      dialogWrapper.container.nativeElement.classList.add('show');
+      dialogWrapper.container.nativeElement.classList.add('in');
     });
     if(options.autoCloseTimeout) {
       setTimeout(()=>{
@@ -61,6 +61,9 @@ export class DialogHolderComponent {
     if(options.closeByClickingOutside) {
       dialogWrapper.closeByClickOutside();
     }
+    if(options.backdropColor) {
+      dialogWrapper.container.nativeElement.style.backgroundColor = options.backdropColor;
+    }
     return _component.fillData(data);
   }
 
@@ -68,10 +71,11 @@ export class DialogHolderComponent {
    * Removes dialog
    * @param {DialogComponent} component
    */
-  removeDialog(component:DialogComponent) {
+  removeDialog(component:DialogComponent<any, any>) {
     let element = component.wrapper.container.nativeElement;
 
     element.classList.remove('show');
+    element.classList.remove('in');
     setTimeout(() => {
         this._removeElement(component);
     }, 300);

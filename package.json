@@ -1,10 +1,11 @@
 {
   "name": "ng2-bootstrap-modal",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "It is a library to make managment of bootstrap modal dialogs easier in Angular2",
   "main": "index.ts",
   "scripts": {
-    "build": "ngc"
+    "build": "rm -rf dist && ngc",
+    "win-build": "(if exist rd /s /q dist) && ngc"
   },
   "repository": {
     "type": "git",
@@ -22,16 +23,16 @@
     "url": "https://github.com/ankosoftware/ng2-bootstrap-modal/issues"
   },
   "homepage": "https://github.com/ankosoftware/ng2-bootstrap-modal#readme",
-  "dependencies": {
-    "@angular/common": "^2.4.4",
-    "@angular/core": "^2.4.4",
-    "rxjs": "^5.0.3",
-    "zone.js": "^0.7.6"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@angular/compiler": "^2.1.1",
-    "@angular/compiler-cli": "^2.1.1",
-    "@angular/platform-server": "2.4.7",
-    "typescript": "2.1.6"
+    "@angular/common": "^2.4.9",
+    "@angular/core": "^2.4.9",
+    "rxjs": "^5.0.3",
+    "zone.js": "^0.7.6",
+    "@angular/compiler": "^2.4.9",
+    "@angular/compiler-cli": "^2.4.9",
+    "@angular/platform-browser": "^2.4.9",
+    "@angular/platform-server": "^2.4.9",
+    "typescript": "^2.2.1"
   }
 }

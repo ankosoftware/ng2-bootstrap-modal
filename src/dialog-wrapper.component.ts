@@ -7,18 +7,17 @@ import {DialogService} from "./dialog.service";
 @Component({
   selector: 'dialog-wrapper',
   template: `
-  <div #container class="modal fade" style="display:block !important;" role="dialog">
-      <template #element></template>
-  </div>
-  `
+    <div #container class="modal fade" style="display:block !important;" role="dialog">
+        <template #element></template>
+    </div>
+`
 })
 export class DialogWrapperComponent {
 
   /**
    * Target element to insert dialog content component
-   * @type {ViewContainerRef}
    */
-  @ViewChild('element', {read: ViewContainerRef}) private element: ViewContainerRef;
+  @ViewChild('element', {read: ViewContainerRef}) public element: ViewContainerRef;
 
   /**
    * Link container DOM element
@@ -29,7 +28,7 @@ export class DialogWrapperComponent {
    * Dialog content componet
    * @type {DialogComponent}
    */
-  private content: DialogComponent;
+  private content: DialogComponent<any, any>;
 
   /**
    * Constructor
@@ -43,21 +42,26 @@ export class DialogWrapperComponent {
    * @param {Type<DialogComponent>} component
    * @return {DialogComponent}
    */
-  addComponent(component: Type<DialogComponent>) {
+  addComponent<T, T1>(component: Type<DialogComponent<T, T1>>) {
     let factory = this.resolver.resolveComponentFactory(component);
     let injector = ReflectiveInjector.fromResolvedProviders([], this.element.injector);
     let componentRef = factory.create(injector);
     this.element.insert(componentRef.hostView);
-    this.content =  <DialogComponent>componentRef.instance;
+    this.content =  <DialogComponent<T, T1>> componentRef.instance;
     this.content.wrapper = this;
     return this.content;
   }
 
+  /**
+   * Registers event handler to close dialog by click on backdrop
+   */
   closeByClickOutside() {
-    this.container.nativeElement.addEventListener('click', (event)=>{
-      if(event.target == this.container.nativeElement) {
+    const containerEl = this.container.nativeElement;
+    containerEl.querySelector('.modal-content').addEventListener('click', (event)=> {
+      event.stopPropagation();
+    });
+    containerEl.addEventListener('click', () => {
         this.dialogService.removeDialog(this.content);
-      }
     }, false);
   }
 }

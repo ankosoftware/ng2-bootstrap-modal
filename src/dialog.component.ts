@@ -4,18 +4,23 @@ import {Observable, Observer} from 'rxjs';
 import {DialogWrapperComponent} from "./dialog-wrapper.component";
 import {DialogService} from "./dialog.service";
 
-export abstract class DialogComponent implements OnDestroy {
+/**
+ * Abstract dialog
+ * @template T - dialog data;
+ * @template T1 - dialog result
+ */
+export class DialogComponent<T, T1> implements OnDestroy {
 
   /**
    * Observer to return result from dialog
    */
-  private observer: Observer<any>;
+  private observer: Observer<T1>;
 
   /**
    * Dialog result
-   * @type {any}
+   * @type {T1}
    */
-  protected result: any;
+  protected result: T1;
 
   /**
    * Dialog wrapper (modal placeholder)
@@ -30,10 +35,11 @@ export abstract class DialogComponent implements OnDestroy {
 
   /**
    *
-   * @param {any} data
-   * @return {Observable<any>}
+   * @param {T} data
+   * @return {Observable<T1>}
    */
-  fillData(data:any = {}): Observable<any> {
+  fillData(data:T): Observable<T1> {
+    data = data || <T>{};
     let keys = Object.keys(data);
     for(let i=0, length=keys.length; i<length; i++) {
       let key = keys[i];

@@ -1,14 +1,14 @@
-import { ComponentFactoryResolver, Type } from "@angular/core";
+import { ViewContainerRef, ComponentFactoryResolver, Type } from "@angular/core";
 import { DialogComponent } from "./dialog.component";
 import { Observable } from "rxjs";
-import { DialogOptions } from "./dialog-options";
+import { DialogOptions } from "./dialog.service";
 export declare class DialogHolderComponent {
     private resolver;
-    private element;
-    dialogs: Array<DialogComponent>;
+    element: ViewContainerRef;
+    dialogs: Array<DialogComponent<any, any>>;
     constructor(resolver: ComponentFactoryResolver);
-    addDialog(component: Type<DialogComponent>, data?: any, options?: DialogOptions): Observable<any>;
-    removeDialog(component: DialogComponent): void;
+    addDialog<T, T1>(component: Type<DialogComponent<T, T1>>, data?: T, options?: DialogOptions): Observable<T1>;
+    removeDialog(component: DialogComponent<any, any>): void;
     private _removeElement(component);
     clear(): void;
 }
