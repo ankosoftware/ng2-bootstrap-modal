@@ -2,7 +2,7 @@
 
 It is a library to make usage of bootstrap modal plugin easier in Angular2. 
 Create clear and reusable modal components.
-It makes managing dialogs painless and more clear. 
+It makes managing dialogs painless and clearer. 
 
 Library does not use bootstrap js, only css.
 
@@ -17,7 +17,7 @@ npm install ng2-bootstrap-modal
 See [Live Demo](https://plnkr.co/edit/MB6NnzfhicMyAiMJy6YM?p=preview) 
 
 ###Without bootstrap?
-Yes, you can create your own css. Just write css for .modal and .modal-dialog classes.
+Yes, you can create your own CSS. Just write css for .modal and .modal-dialog classes.
 
 ```css
 .modal {
@@ -76,8 +76,8 @@ Yes, you can create your own css. Just write css for .modal and .modal-dialog cl
 
 ##Quickstart
 
-### Step 1. add bootstrap css  
-You can add bootstrap css from cdn
+### Step 1. add bootstrap CSS  
+You can add bootstrap CSS from CDN
 ```html
 <!-- Bootstrap 3.x -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -111,8 +111,8 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {}
 ```
-By default dialogs placeholder will be added to AppComponent.
-But you can select custom placeholder (for example document body):
+By default, dialog placeholder will be added to AppComponent.
+But you can select custom placeholder (i.e. document body):
 ```typescript
 imports: [
     ...
@@ -121,7 +121,7 @@ imports: [
 ```
 
 
-###Step 2. Create your modal dialog component
+###Step 2. Create your modal dialog component 
 Your modal dialog is expected to be extended from **DialogComponent**.
 **DialogService** is generic class with two arguments:
 1) input dialog data type (data to initialize component);
@@ -171,7 +171,7 @@ export class ConfirmComponent extends DialogComponent<ConfirmModel, boolean> imp
 ```
 
 ###Step 3. Register created component to module
-Add component to **declarations** and **entryComponents** section because component
+Add component to **declarations** and **entryComponents** section, because the component
 will be created dynamically.
 
 app.module.ts:
