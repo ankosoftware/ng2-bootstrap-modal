@@ -6,6 +6,7 @@ export interface DialogOptions {
     autoCloseTimeout?: number;
     closeByClickingOutside?: boolean;
     backdropColor?: string;
+    keyboard?: boolean;
 }
 export declare class DialogServiceConfig {
     container: HTMLElement;

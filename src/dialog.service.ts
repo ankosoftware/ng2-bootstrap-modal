@@ -10,6 +10,7 @@ export interface DialogOptions {
   autoCloseTimeout?: number;
   closeByClickingOutside?: boolean;
   backdropColor?: string;
+  keyboard?: boolean;
 }
 
 export class DialogServiceConfig {

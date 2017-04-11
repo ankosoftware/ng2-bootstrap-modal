@@ -2,7 +2,7 @@ import { OnDestroy
 } from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {DialogWrapperComponent} from "./dialog-wrapper.component";
-import {DialogService} from "./dialog.service";
+import {DialogService, DialogOptions} from "./dialog.service";
 
 /**
  * Abstract dialog
@@ -10,6 +10,8 @@ import {DialogService} from "./dialog.service";
  * @template T1 - dialog result
  */
 export class DialogComponent<T, T1> implements OnDestroy {
+
+  public options: DialogOptions;
 
   /**
    * Observer to return result from dialog

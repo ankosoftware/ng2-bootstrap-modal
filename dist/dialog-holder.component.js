@@ -18,11 +18,18 @@ var DialogHolderComponent = (function () {
     }
     DialogHolderComponent.prototype.addDialog = function (component, data, options) {
         var _this = this;
-        options = options || {};
+        options = options || {
+            backdropColor: 'rgba(0,0,0,.5)',
+            keyboard: true
+        };
+        if (!document.body.classList.contains('modal-open')) {
+            document.body.classList.add('modal-open');
+        }
         var factory = this.resolver.resolveComponentFactory(dialog_wrapper_component_1.DialogWrapperComponent);
         var componentRef = this.element.createComponent(factory, options.index);
         var dialogWrapper = componentRef.instance;
         var _component = dialogWrapper.addComponent(component);
+        _component.options = options;
         if (typeof (options.index) !== 'undefined') {
             this.dialogs.splice(options.index, 0, _component);
         }
@@ -53,6 +60,7 @@ var DialogHolderComponent = (function () {
         element.classList.remove('in');
         setTimeout(function () {
             _this._removeElement(component);
+            _this.dialogs.length === 0 && document.body.classList.remove('modal-open');
         }, 300);
     };
     DialogHolderComponent.prototype._removeElement = function (component) {
@@ -66,6 +74,13 @@ var DialogHolderComponent = (function () {
         this.element.clear();
         this.dialogs = [];
     };
+    DialogHolderComponent.prototype.documentKeypress = function (event) {
+        if (this.dialogs.length <= 0)
+            return;
+        var component = this.dialogs[this.dialogs.length - 1];
+        if (component.options.keyboard === true)
+            this.removeDialog(component);
+    };
     return DialogHolderComponent;
 }());
 __decorate([
@@ -75,6 +90,9 @@ __decorate([
 DialogHolderComponent = __decorate([
     core_1.Component({
         selector: 'dialog-holder',
+        host: {
+            '(body:keydown)': 'documentKeypress($event)'
+        },
         template: '<template #element></template>',
     }),
     __metadata("design:paramtypes", [core_1.ComponentFactoryResolver])

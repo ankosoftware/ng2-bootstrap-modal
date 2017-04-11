@@ -1,9 +1,10 @@
 import { OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DialogWrapperComponent } from "./dialog-wrapper.component";
-import { DialogService } from "./dialog.service";
+import { DialogService, DialogOptions } from "./dialog.service";
 export declare class DialogComponent<T, T1> implements OnDestroy {
     protected dialogService: DialogService;
+    options: DialogOptions;
     private observer;
     protected result: T1;
     wrapper: DialogWrapperComponent;
