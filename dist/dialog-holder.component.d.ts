@@ -11,4 +11,5 @@ export declare class DialogHolderComponent {
     removeDialog(component: DialogComponent<any, any>): void;
     private _removeElement(component);
     clear(): void;
+    documentKeypress(event: KeyboardEvent): void;
 }

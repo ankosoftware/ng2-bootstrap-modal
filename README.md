@@ -1,3 +1,10 @@
+# 修改部分
+
++ 修：默认黑色半透明背景，即：`{ backdropColor: 'rgba(0,0,0,.5)`。
++ 增：打开时隐藏 `body` 滚动条，即 `<body class="modal-open">`。
++ 增：设置 `{keyboard: true}` 允许按 `ESC` 关闭，默认：打开。
++ 增：gh-pages 分支，[demo](https://cipchk.github.io/ng2-bootstrap-modal/)。
+
 #Angular2 Bootstrap Modal Service
 
 It is a library to make usage of bootstrap modal plugin easier in Angular2. 
