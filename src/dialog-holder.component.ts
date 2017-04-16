@@ -114,7 +114,7 @@ export class DialogHolderComponent {
 
     // 移除最新一个组件
     let component = this.dialogs[this.dialogs.length - 1];
-    if (component.options.keyboard === true)
+    if (component.options.keyboard === true && event.keyCode === 27)
       this.removeDialog(component);
   }
 }
