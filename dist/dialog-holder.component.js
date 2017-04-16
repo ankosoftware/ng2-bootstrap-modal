@@ -78,7 +78,7 @@ var DialogHolderComponent = (function () {
         if (this.dialogs.length <= 0)
             return;
         var component = this.dialogs[this.dialogs.length - 1];
-        if (component.options.keyboard === true)
+        if (component.options.keyboard === true && event.keyCode === 27)
             this.removeDialog(component);
     };
     return DialogHolderComponent;
