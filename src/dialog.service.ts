@@ -70,6 +70,9 @@ export class DialogService {
    * Closes all dialogs
    */
   removeAll(): void {
+    if(!this.dialogHolderComponent) {
+      return;
+    }
     this.dialogHolderComponent.clear();
   }
 
