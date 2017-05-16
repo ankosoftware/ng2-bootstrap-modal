@@ -75,7 +75,7 @@ __decorate([
 DialogHolderComponent = __decorate([
     core_1.Component({
         selector: 'dialog-holder',
-        template: '<template #element></template>',
+        template: '<ng-template #element></ng-template>',
     }),
     __metadata("design:paramtypes", [core_1.ComponentFactoryResolver])
 ], DialogHolderComponent);
