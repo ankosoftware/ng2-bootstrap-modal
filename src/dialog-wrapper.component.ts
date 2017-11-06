@@ -57,10 +57,10 @@ export class DialogWrapperComponent {
    */
   closeByClickOutside() {
     const containerEl = this.container.nativeElement;
-    containerEl.querySelector('.modal-content').addEventListener('click', (event)=> {
+    containerEl.querySelector('.modal-content').addEventListener('mouseup', (event)=> {
       event.stopPropagation();
     });
-    containerEl.addEventListener('click', () => {
+    containerEl.addEventListener('mouseup', () => {
         this.dialogService.removeDialog(this.content);
     }, false);
   }
