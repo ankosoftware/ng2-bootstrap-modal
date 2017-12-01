@@ -9,7 +9,7 @@ import {DialogOptions} from "./dialog.service";
 
 @Component({
   selector: 'dialog-holder',
-  template: '<template #element></template>',
+  template: '<ng-template #element></ng-template>',
 })
 export class DialogHolderComponent {
 
