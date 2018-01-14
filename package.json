@@ -1,6 +1,6 @@
 {
   "name": "ng2-bootstrap-modal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "It is a library to make managment of bootstrap modal dialogs easier in Angular2",
   "main": "index.js",
   "scripts": {
