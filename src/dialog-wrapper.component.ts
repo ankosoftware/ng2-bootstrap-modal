@@ -1,8 +1,7 @@
 import {
-  Component, ViewContainerRef, ViewChild, ComponentFactoryResolver, ReflectiveInjector, Type
+  Component, ViewContainerRef, ViewChild, ComponentFactoryResolver, ReflectiveInjector, Type, Output, EventEmitter
 } from '@angular/core';
 import {DialogComponent} from "./dialog.component";
-import {DialogService} from "./dialog.service";
 
 @Component({
   selector: 'dialog-wrapper',
@@ -13,6 +12,10 @@ import {DialogService} from "./dialog.service";
 `
 })
 export class DialogWrapperComponent {
+  /**
+   * Notify the parent DialogHolder
+   */
+  @Output() onDialogClose = new EventEmitter();
 
   /**
    * Target element to insert dialog content component
@@ -35,7 +38,7 @@ export class DialogWrapperComponent {
    * @param {ComponentFactoryResolver} resolver
    * @param {DialogService} dialogService
    */
-  constructor(private resolver: ComponentFactoryResolver, private dialogService: DialogService) {}
+  constructor(private resolver: ComponentFactoryResolver) {}
 
   /**
    * Adds content dialog component to wrapper
@@ -61,7 +64,7 @@ export class DialogWrapperComponent {
       event.stopPropagation();
     });
     containerEl.addEventListener('click', () => {
-        this.dialogService.removeDialog(this.content);
+        this.onDialogClose.emit();
     }, false);
   }
 }

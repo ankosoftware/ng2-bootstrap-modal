@@ -43,6 +43,9 @@ export class DialogHolderComponent {
     let componentRef = this.element.createComponent(factory, options.index);
     let dialogWrapper: DialogWrapperComponent = <DialogWrapperComponent> componentRef.instance;
     let _component: DialogComponent<T,T1> =  dialogWrapper.addComponent(component);
+    _component.wrapper.onDialogClose.subscribe(() => {
+      this.removeDialog(_component);
+    });
     if(typeof(options.index) !== 'undefined') {
       this.dialogs.splice(options.index, 0, _component);
     }
