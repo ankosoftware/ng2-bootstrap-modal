@@ -89,7 +89,7 @@ or
 ```
 
 
-### Step 1. import '**BootstrapModalModule**' module
+### Step 2. import '**BootstrapModalModule**' module
 
 app.module.ts:
 ```typescript
@@ -121,7 +121,7 @@ imports: [
 ```
 
 
-###Step 2. Create your modal dialog component 
+###Step 3. Create your modal dialog component 
 Your modal dialog is expected to be extended from **DialogComponent**.
 **DialogService** is generic class with two arguments:
 1) input dialog data type (data to initialize component);
@@ -170,7 +170,7 @@ export class ConfirmComponent extends DialogComponent<ConfirmModel, boolean> imp
 }
 ```
 
-###Step 3. Register created component to module
+###Step 4. Register created component to module
 Add component to **declarations** and **entryComponents** section, because the component
 will be created dynamically.
 
@@ -201,7 +201,7 @@ app.module.ts:
     export class AppModule {}
 ```
 
-###Step 4. Usage
+###Step 5. Usage
 
 app.component.ts
 ```typescript
