@@ -1,4 +1,4 @@
-#Angular2 Bootstrap Modal Service
+# Angular2 Bootstrap Modal Service
 
 It is a library to make usage of bootstrap modal plugin easier in Angular2. 
 Create clear and reusable modal components.
@@ -8,15 +8,15 @@ Library does not use bootstrap js, only css.
 
 Compatible with bootstrap 3 and bootstrap 4.
 
+## Installation
 
-
-##Installation
 ```npm
 npm install ng2-bootstrap-modal
 ```
 See [Live Demo](https://plnkr.co/edit/MB6NnzfhicMyAiMJy6YM?p=preview) 
 
-###Without bootstrap?
+### Without bootstrap?
+
 Yes, you can create your own CSS. Just write css for .modal and .modal-dialog classes.
 
 ```css
@@ -74,7 +74,7 @@ Yes, you can create your own CSS. Just write css for .modal and .modal-dialog cl
 }
 ```
 
-##Quickstart
+## Quickstart
 
 ### Step 1. add bootstrap CSS  
 You can add bootstrap CSS from CDN
@@ -88,8 +88,7 @@ or
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 ```
 
-
-### Step 1. import '**BootstrapModalModule**' module
+### Step 2. import '**BootstrapModalModule**' module
 
 app.module.ts:
 ```typescript
@@ -120,8 +119,8 @@ imports: [
   ]
 ```
 
+### Step 3. Create your modal dialog component 
 
-###Step 2. Create your modal dialog component 
 Your modal dialog is expected to be extended from **DialogComponent**.
 **DialogService** is generic class with two arguments:
 1) input dialog data type (data to initialize component);
@@ -170,7 +169,8 @@ export class ConfirmComponent extends DialogComponent<ConfirmModel, boolean> imp
 }
 ```
 
-###Step 3. Register created component to module
+### Step 4. Register created component to module
+
 Add component to **declarations** and **entryComponents** section, because the component
 will be created dynamically.
 
@@ -201,7 +201,7 @@ app.module.ts:
     export class AppModule {}
 ```
 
-###Step 4. Usage
+### Step 5. Usage
 
 app.component.ts
 ```typescript
@@ -241,11 +241,14 @@ app.component.ts
     }
 ```
 
-##Documentation
+## Documentation
 
-###DialogComponent
+### DialogComponent
+
 Super class of all modal components.
-####Class Overview
+
+#### Class Overview
+
 ```typescript
 /**
 * Dialog abstract class
@@ -272,7 +275,8 @@ abstract class DialogComponent<T1, T2> implements T1 {
 }
 ```
 
-###DialogOptions 
+### DialogOptions 
+
 ```typescript
 interface DialogOptions {
   /**
@@ -302,10 +306,12 @@ interface DialogOptions {
 }
 ```
 
-###DialogService 
+### DialogService 
+
 Service to show dialogs
 
-###Class Overview
+### Class Overview
+
 ```typescript
 class DialogService {
     /**
